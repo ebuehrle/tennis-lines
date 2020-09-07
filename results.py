@@ -6,19 +6,29 @@ import tennis
 import visualization
 import turtle
 
-visualization.plot_court(tennis.vertices, tennis.lines)
-visualization.plot_vertices(tennis.vertices)
-turtle.getscreen().getcanvas().postscript(file='vertices.eps')
+def plot_vertices():
+    visualization.plot_court(tennis.vertices, tennis.lines)
+    visualization.plot_vertices(tennis.vertices)
+    turtle.getscreen().getcanvas().postscript(file='vertices.eps')
 
-visualization.plot_solution(tennis.vertices, tennis.lines, opt_partial_lines)
-tutle.getscreen().getcanvas().postscript(file='full.eps')
+def plot_full_lines():
+    visualization.plot_solution(tennis.vertices, tennis.lines, opt_partial_lines)
+    turtle.getscreen().getcanvas().postscript(file='full.eps')
 
-visualization.plot_solution(tennis.vertices, tennis.lines, reversed(opt_full_lines))
-turtle.getscreen().getcanvas().postscript(file='partial.eps')
+def plot_partial_lines():
+    visualization.plot_solution(tennis.vertices, tennis.lines, reversed(opt_full_lines))
+    turtle.getscreen().getcanvas().postscript(file='partial.eps')
 
-import matplotlib.pyplot as plt
-plt.plot(tennis.incremental_path_cost(opt_full_lines))
-plt.plot(tennis.incremental_path_cost(subopt_full_lines))
-plt.xlabel('Step')
-plt.ylabel('Accumulated Distance')
-plt.show()
+def plot_compare_solution():
+    import matplotlib.pyplot as plt
+    plt.plot(tennis.incremental_path_cost(opt_full_lines))
+    plt.plot(tennis.incremental_path_cost(subopt_full_lines))
+    plt.xlabel('Step')
+    plt.ylabel('Accumulated Distance')
+    plt.savefig('compare.png')
+
+if __name__ == '__main__':
+    plot_vertices()
+    plot_full_lines()
+    plot_partial_lines()
+    plot_compare_solution()

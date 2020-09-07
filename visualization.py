@@ -6,6 +6,7 @@ ORIGIN_PX = (-310, -310)
 
 COURT_COLOR = '#B73125'
 LINE_COLOR = '#FFFFFF'
+VERTEX_LABEL_COLOR = '#000000'
 PATH_COLOR = '#AAAA00'
 
 LINE_WIDTH = 3
@@ -29,16 +30,19 @@ def arrowarc(p0, p1, r_factor, label=''):
     turtle.left(half_angle)
     turtle.circle(-r, half_angle)
     turtle.stamp()
-    turtle.write(label, font=('Arial', 32, "normal"))
+    turtle.write(label, font=('Arial', 32, 'normal'))
     turtle.circle(-r, half_angle)
     #turtle.stamp()
 
 def plot_vertices(vertices):
     turtle.shape('square')
     turtle.penup()
-    for v in vertices:
+    for i, v in enumerate(vertices):
         turtle.goto(vertex2pos(v))
+        turtle.color(LINE_COLOR)
         turtle.stamp()
+        turtle.color(VERTEX_LABEL_COLOR)
+        turtle.write(i, align='center', font=('Arial', 16, 'normal'))
 
 def plot_lines(vertices, lines):
     turtle.hideturtle()
