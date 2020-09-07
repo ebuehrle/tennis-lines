@@ -11,6 +11,9 @@ PATH_COLOR = '#AAAA00'
 
 LINE_WIDTH = 3
 
+turtle.hideturtle()
+turtle.speed(0)
+
 def vertex2pos(v):
     return (ORIGIN_PX[0] + v[0] * PX_PER_M_X, ORIGIN_PX[1] + v[1] * PX_PER_M_Y)
 
@@ -37,16 +40,18 @@ def arrowarc(p0, p1, r_factor, label=''):
 def plot_vertices(vertices):
     turtle.shape('square')
     turtle.penup()
+    turtle.setheading(0)
     for i, v in enumerate(vertices):
         turtle.goto(vertex2pos(v))
         turtle.color(LINE_COLOR)
         turtle.stamp()
         turtle.color(VERTEX_LABEL_COLOR)
+        turtle.penup()
+        turtle.sety(turtle.ycor() - 8)
         turtle.write(i, align='center', font=('Arial', 16, 'normal'))
+        turtle.sety(turtle.ycor() + 8)
 
 def plot_lines(vertices, lines):
-    turtle.hideturtle()
-    turtle.speed(0)
     turtle.color(LINE_COLOR)
     turtle.pensize(LINE_WIDTH)
     for l in lines:
@@ -59,9 +64,26 @@ def plot_lines(vertices, lines):
         turtle.pendown()
         turtle.goto(p1)
 
+def background(color):
+    width = turtle.window_width()
+    height = turtle.window_height()
+    turtle.penup()
+    turtle.setpos((-width/2, height/2))
+    turtle.setheading(0)
+    turtle.color(color)
+    turtle.pendown()
+    turtle.begin_fill()
+    for i in range(2):
+        turtle.forward(width)
+        turtle.right(90)
+        turtle.forward(height)
+        turtle.right(90)
+    turtle.end_fill()
+
 def plot_court(vertices, lines):
     turtle.clear()
-    turtle.bgcolor(COURT_COLOR)
+    #turtle.bgcolor(COURT_COLOR)
+    background(COURT_COLOR)
     plot_lines(vertices, lines)
 
 def plot_path(vertices, path):
@@ -80,5 +102,5 @@ def plot_path(vertices, path):
 
 def plot_solution(vertices, lines, path):
     plot_court(vertices, lines)
-    plot_vertices(vertices)
     plot_path(vertices, path)
+    plot_vertices(vertices)

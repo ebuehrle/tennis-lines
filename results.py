@@ -24,11 +24,11 @@ def plot_compare_solution():
     plt.plot(tennis.incremental_path_cost(opt_full_lines))
     plt.plot(tennis.incremental_path_cost(subopt_full_lines))
     plt.xlabel('Step')
-    plt.ylabel('Accumulated Distance')
+    plt.ylabel('Accumulated Distance in m')
     plt.savefig('compare.png')
 
 if __name__ == '__main__':
     plot_vertices()
     plot_full_lines()
     plot_partial_lines()
-    plot_compare_solution()
+    #plot_compare_solution()
