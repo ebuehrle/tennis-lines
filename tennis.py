@@ -2,7 +2,7 @@ import functools
 import bitsets
 
 from dimensions import vertices
-from dimensions import full_lines as lines
+from dimensions import partial_lines as lines
 Lines = bitsets.bitset('Lines', tuple(lines))
 
 def distance(v1, v2):
@@ -27,11 +27,7 @@ def fastest_tour(lines, start_vertex_idx, must_take_line):
         return (distance(vertices[start_vertex_idx], vertices[0]), 0, False)
     
     min_cost, min_vertex, min_take_line = float('inf'), -1, False
-    for vidx in {v[0] for v in lines} | {v[1] for v in lines}: # only consider vertices incident to remaining lines
-    #for vidx, _ in enumerate(vertices):
-        if vidx == start_vertex_idx:
-            continue
-        
+    for vidx in ({ v[0] for v in lines } | { v[1] for v in lines }) - { start_vertex_idx }: # only consider vertices incident to remaining lines
         remaining_lines = get_remaining_lines(lines, start_vertex_idx, vidx)
         took_line = (remaining_lines != lines)
         if must_take_line and not took_line:
@@ -43,7 +39,7 @@ def fastest_tour(lines, start_vertex_idx, must_take_line):
         if cost < min_cost:
             min_cost = cost
             min_vertex = vidx
-            min_take_line = must_take_line
+            min_take_line = not took_line
     
     return (min_cost, min_vertex, min_take_line)
 
@@ -69,7 +65,8 @@ def reconstruct_path():
 
 def main():
     opt_path = reconstruct_path()
-    print(opt_path)
+    print("Optimal tour:", opt_path)
+    print("Optimal tour length:", incremental_path_cost(opt_path)[-1])
 
 if __name__ == '__main__':
     main()
