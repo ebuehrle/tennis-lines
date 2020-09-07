@@ -21,7 +21,7 @@ def plot_measurements():
 
     visualization.plot_vertical_measurement(tennis.vertices[0], tennis.vertices[1], '3m')
     visualization.plot_horizontal_measurement(tennis.vertices[0], tennis.vertices[1], '3m', delta_y=-60)
-    turtle.getscreen().getcanvas().postscript(file='measurements.eps')
+    turtle.getscreen().getcanvas().postscript(file='dimensions.eps')
 
 def plot_full_lines():
     visualization.plot_solution(tennis.vertices, tennis.lines, reversed(opt_full_lines))
