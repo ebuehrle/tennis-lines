@@ -64,11 +64,60 @@ def plot_lines(vertices, lines):
         turtle.pendown()
         turtle.goto(p1)
 
+def plot_horizontal_measurement(v1, v2, label, align='top', delta_y=-30):
+    (x1, y1) = vertex2pos(v1)
+    (x2, y2) = vertex2pos(v2)
+
+    x1 = min(x1, x2)
+    x2 = max(x1, x2)
+    y = delta_y + (min(y1, y2) if align == 'bottom' else max(y1, y2))
+    
+    turtle.penup()
+    turtle.shape('arrow')
+    turtle.goto((x1 + 10, y))
+    turtle.setheading(180)
+    turtle.stamp()
+    turtle.pendown()
+    turtle.goto((x2 - 10, y))
+    turtle.setheading(0)
+    turtle.stamp()
+    turtle.penup()
+
+    turtle.goto(((x1+x2)/2, y))
+    turtle.setheading(turtle.towards((x2, y)))
+    turtle.left(90)
+    turtle.write(label, align='center', font=('Arial', 16, 'normal'))
+
+def plot_vertical_measurement(v1, v2, label, align='left', delta_x=-30):
+    # TODO: generalize using rotational transform
+    (x1, y1) = vertex2pos(v1)
+    (x2, y2) = vertex2pos(v2)
+
+    y1 = min(y1, y2)
+    y2 = max(y1, y2)
+    x = delta_x + (max(x1, x2) if align == 'right' else min(x1, x2))
+    
+    turtle.penup()
+    turtle.shape('arrow')
+    turtle.goto((x, y1 + 10))
+    turtle.setheading(-90)
+    turtle.stamp()
+    turtle.pendown()
+    turtle.goto((x, y2 - 10))
+    turtle.setheading(90)
+    turtle.stamp()
+    turtle.penup()
+
+    turtle.goto((x, (y1+y2)/2))
+    turtle.setheading(turtle.towards((x, y2)))
+    turtle.left(90)
+    turtle.write(label, align='center', font=('Arial', 16, 'normal'))
+
 def background(color):
     width = turtle.window_width()
     height = turtle.window_height()
     turtle.penup()
-    turtle.setpos((-width/2, height/2))
+    turtle.goto((-width/2, height/2))
     turtle.setheading(0)
     turtle.color(color)
     turtle.pendown()
