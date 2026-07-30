@@ -2,4 +2,4 @@
 
 ![Solution](tennis-lines-full.svg)
 
-(using dynamic programming &ndash; total length 104m)
+(using mixed-integer linear programming; tour length 95.85m)
